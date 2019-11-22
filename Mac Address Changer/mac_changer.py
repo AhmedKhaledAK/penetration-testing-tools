@@ -8,6 +8,7 @@ Created on Thu Nov 21 18:44:25 2019
 
 import subprocess
 
+# use raw_input() instead of input() to run on python2.7
 interface = input("interface > ")
 new_mac = input("mac > ")
 
