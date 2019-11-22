@@ -8,7 +8,7 @@ Created on Thu Nov 21 18:44:25 2019
 
 import subprocess
 
-interface = input("interface > ");
-new_mac = input("mac > ");
+interface = input("interface > ")
+new_mac = input("mac > ")
 
 subprocess.call("ifconfig", shell=True)
