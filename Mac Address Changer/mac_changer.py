@@ -9,6 +9,22 @@ Created on Thu Nov 21 18:44:25 2019
 import subprocess
 import optparse
 
+
+def change_mac(interface, new_mac):
+    # this way of calling the call method is more secure so that a hacker can't hijack the system
+    # by using for example: ;ls; because python will treat this whole list as a single command and not
+    # as multiple commands
+    if interface is None and new_mac is None:
+        print("no interface and mac address specified, exiting...")
+    elif interface is None:
+        print("no interface specified, exiting...")
+    elif new_mac is None:
+        print("no mac address specified, exiting...")
+    else:
+        subprocess.call(["ifconfig", interface, "down"])
+        subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
+        subprocess.call(["ifconfig", interface, "up"])
+
 # creating an instance from OptionParser
 parser = optparse.OptionParser()
 # adding arguments to the command-line arguments
@@ -23,16 +39,4 @@ values = parser.parse_args()
 interface = values[0].interface
 new_mac = values[0].new_mac
 
-# this way of calling the call method is more secure so that a hacker can't hijack the system
-# by using for example: ;ls; because python will treat this whole list as a single command and not
-# as multiple commands
-if interface is None and new_mac is None:
-    print("no interface and mac address specified, exiting...")
-elif interface is None:
-    print("no interface specified, exiting...")
-elif new_mac is None:
-    print("no mac address specified, exiting...")
-else:
-    subprocess.call(["ifconfig", interface, "down"])
-    subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
-    subprocess.call(["ifconfig", interface, "up"])
+change_mac(interface, new_mac)
