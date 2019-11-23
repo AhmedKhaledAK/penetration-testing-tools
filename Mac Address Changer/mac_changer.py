@@ -19,8 +19,8 @@ parser.add_option("-m", "--mac", dest="new_mac", help="The new MAC address of th
 values = parser.parse_args()
 
 # use raw_input() instead of input() to run on python2.7
-interface = input("interface > ")
-new_mac = input("mac > ")
+interface = values[0].interface
+new_mac = values[0].new_mac
 
 # this way of calling the call method is more secure so that a hacker can't hijack the system
 # by using for example: ;ls; because python will treat this whole list as a single command and not
