@@ -25,6 +25,13 @@ new_mac = values[0].new_mac
 # this way of calling the call method is more secure so that a hacker can't hijack the system
 # by using for example: ;ls; because python will treat this whole list as a single command and not
 # as multiple commands
-subprocess.call(["ifconfig", interface, "down"])
-subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
-subprocess.call(["ifconfig", interface, "up"])
+if interface is None and new_mac is None:
+    print("no interface and mac address specified, exiting...")
+elif interface is None:
+    print("no interface specified, exiting...")
+elif new_mac is None:
+    print("no mac address specified, exiting...")
+else:
+    subprocess.call(["ifconfig", interface, "down"])
+    subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
+    subprocess.call(["ifconfig", interface, "up"])
