@@ -9,6 +9,11 @@ Created on Thu Nov 21 18:44:25 2019
 import subprocess
 import optparse
 
+parser = optparse.OptionParser()
+parser.add_option("-i", "--interface", dest="interface", 
+                  help="The Interface that you want to change its MAC address")
+parser.parse_args()
+
 # use raw_input() instead of input() to run on python2.7
 interface = input("interface > ")
 new_mac = input("mac > ")
