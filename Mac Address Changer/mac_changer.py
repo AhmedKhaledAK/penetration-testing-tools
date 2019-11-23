@@ -33,14 +33,10 @@ def parse_command_line():
                   help="The Interface that you want to change its MAC address")
     parser.add_option("-m", "--mac", dest="new_mac", help="The new MAC address of the interface chosen")
     # parsing the arguments passed to add_option method above and 
-    # stored the return value (which is a tuple of the Values and list of the arguments)
+    # returned its return value (which is a tuple of the Values and list of the arguments)
     return parser.parse_args()
 
-
-
-# use raw_input() instead of input() to run on python2.7
 values = parse_command_line()
-
 change_mac(values[0].interface, values[0].new_mac)
 
 
