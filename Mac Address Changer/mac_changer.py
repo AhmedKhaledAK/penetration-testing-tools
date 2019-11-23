@@ -12,6 +12,9 @@ import subprocess
 interface = input("interface > ")
 new_mac = input("mac > ")
 
+# this way of calling the call method is more secure so that a hacker can't hijack the system
+# by using for example: ;ls; because python will treat this whole list as a single command and not
+# as multiple commands
 subprocess.call(["ifconfig", interface, "down"])
 subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
 subprocess.call(["ifconfig", interface, "up"])
