@@ -11,7 +11,7 @@ import optparse
 
 # creating an instance from OptionParser
 parser = optparse.OptionParser()
-# adding the first argument to the executing line
+# adding arguments to the command-line arguments
 parser.add_option("-i", "--interface", dest="interface", 
                   help="The Interface that you want to change its MAC address")
 parser.add_option("-m", "--mac", dest="new_mac", help="The new MAC address of the interface chosen")
