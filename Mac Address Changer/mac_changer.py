@@ -16,7 +16,7 @@ parser.add_option("-i", "--interface", dest="interface",
                   help="The Interface that you want to change its MAC address")
 parser.add_option("-m", "--mac", dest="new_mac", help="The new MAC address of the interface chosen")
 # parsing the arguments passed to add_option method above
-parser.parse_args()
+values = parser.parse_args()
 
 # use raw_input() instead of input() to run on python2.7
 interface = input("interface > ")
