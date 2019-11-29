@@ -19,18 +19,7 @@ def change_mac(interface, new_mac):
     subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
     subprocess.call(["ifconfig", interface, "up"])
     
-    call_result = subprocess.check_output(["ifconfig", interface])
-    call_result = str(call_result, 'utf-8')
-    print(call_result)
-    search_result = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", call_result)
-    if search_result is not None:
-        if new_mac == search_result.group(0):
-            print("mac address changed successfuly")
-        else:
-            print("mac address did not change successfully")
-        print(search_result.group(0))
-    else:
-        print("Could not find a MAC address for this interface")
+    print_current_address(interface)
 
 def parse_command_line():
     # creating an instance from OptionParser
