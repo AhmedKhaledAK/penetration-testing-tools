@@ -20,7 +20,7 @@ def get_current_address(interface):
         return search_result.group(0)
     else:
         print("Could not find a MAC address for this interface")
-        return "-"
+        # returns NoneType
 
 def change_mac(interface, new_mac):
     # this way of calling the call method is more secure so that a hacker can't hijack the system
@@ -56,7 +56,7 @@ values = parse_command_line()
 
 if values[1]==0:
     mac = get_current_address(values[0][0].interface)
-    if mac == "-":
+    if mac is None:
         print("no MAC address to change for this interface")
     else:
         change_mac(values[0][0].interface, values[0][0].new_mac)
