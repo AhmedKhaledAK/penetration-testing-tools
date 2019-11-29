@@ -8,6 +8,7 @@ Created on Thu Nov 21 18:44:25 2019
 
 import subprocess
 import optparse
+import re
 
 
 def change_mac(interface, new_mac):
@@ -17,6 +18,19 @@ def change_mac(interface, new_mac):
     subprocess.call(["ifconfig", interface, "down"])
     subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
     subprocess.call(["ifconfig", interface, "up"])
+    
+    call_result = subprocess.check_output(["ifconfig", interface])
+    call_result = str(call_result, 'utf-8')
+    print(call_result)
+    search_result = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", call_result)
+    if search_result is not None:
+        if new_mac == search_result.group(0):
+            print("mac address changed successfuly")
+        else:
+            print("mac address did not change successfully")
+        print(search_result.group(0))
+    else:
+        print("Could not find a MAC address for this interface")
 
 def parse_command_line():
     # creating an instance from OptionParser
@@ -46,7 +60,5 @@ if values[1]==0:
 else:
     print("errors: ", values[1])
 
-#result = subprocess.check_output(["ifconfig", values[0].interface])
-#print(result)
 
 
