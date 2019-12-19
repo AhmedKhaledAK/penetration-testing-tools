@@ -4,6 +4,8 @@
 Created on Thu Nov 21 18:44:25 2019
 
 @author: Ahmed Khaled
+
+run this on terminal using: python3 mac_changer.py -i <interface_name> -m <new_mac>
 """
 
 import subprocess
