@@ -7,3 +7,7 @@ Created on Thu Dec 19 23:39:34 2019
 """
 
 import scapy.all as scapy
+
+def scan(ip):
+    arp_req = scapy.ARP()
+    print(arp_req.summary)
