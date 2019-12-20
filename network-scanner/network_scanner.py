@@ -9,7 +9,8 @@ Created on Thu Dec 19 23:39:34 2019
 import scapy.all as scapy
 
 def scan(ip):
-    arp_req = scapy.ARP()
+    arp_req = scapy.ARP(pdst=ip)
     print(arp_req.summary())
+    scapy.ls(scapy.ARP())
     
-scan("192.168.1.1/24")
+scan("<your_ip>")
