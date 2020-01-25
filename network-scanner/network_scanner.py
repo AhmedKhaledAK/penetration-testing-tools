@@ -18,5 +18,9 @@ def scan(ip):
     # combining packets
     bc_arpreq_packet = broadcast_packet/arp_req_packet
     bc_arpreq_packet.show()
+    ans, unans = scapy.srp(bc_arpreq_packet)
+    ans.show()
+    unans.show()
+    
     
 scan("<ip>")
