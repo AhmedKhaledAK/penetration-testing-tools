@@ -9,7 +9,11 @@ Created on Thu Dec 19 23:39:34 2019
 import scapy.all as scapy
 
 def scan(ip):
-    arp_req = scapy.ARP(pdst=ip)
+    arp_req = scapy.ARP()
+    arp_req.pdst=ip
     print(arp_req.summary())
+    broadcast = scapy.Ether()
+    broadcast.dst = "ff:ff:ff:ff:ff:ff"
+    print(broadcast.summary())
     
-scan("<your_ip>")
+scan("<ip>")
