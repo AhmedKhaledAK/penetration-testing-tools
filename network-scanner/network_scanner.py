@@ -19,9 +19,9 @@ def scan(ip):
     bc_arpreq_packet = broadcast_packet/arp_req_packet
     bc_arpreq_packet.show()
     # sending and receiving packets, the answered ones and the unanswered. The timeout is necessary.  
-    ans_list = scapy.srp(bc_arpreq_packet, timeout=1)[0]
+    ans_list = scapy.srp(bc_arpreq_packet, timeout=1)[0]e
     for el in ans_list:
-        print(el[1].psrc, " ", el[1].hwsrc)
+        print(el[1].psrc, el[1].hwsrc)
     
     
 scan("<ip>")
