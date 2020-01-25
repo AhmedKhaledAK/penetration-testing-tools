@@ -18,7 +18,8 @@ def scan(ip):
     # combining packets
     bc_arpreq_packet = broadcast_packet/arp_req_packet
     bc_arpreq_packet.show()
-    ans, unans = scapy.srp(bc_arpreq_packet)
+    # sending and receiving packets, the answered ones and the unanswered. The timeout is necessary.  
+    ans, unans = scapy.srp(bc_arpreq_packet, timeout=1)
     ans.show()
     unans.show()
     
