@@ -11,9 +11,11 @@ import scapy.all as scapy
 def scan(ip):
     arp_req = scapy.ARP()
     arp_req.pdst=ip
-    print(arp_req.summary())
+    arp_req.show()
     broadcast = scapy.Ether()
     broadcast.dst = "ff:ff:ff:ff:ff:ff"
-    print(broadcast.summary())
+    broadcast.show()
+    bc_arpreq = broadcast/arp_req
+    bc_arpreq.show()
     
 scan("<ip>")
