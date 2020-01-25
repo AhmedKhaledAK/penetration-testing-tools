@@ -11,6 +11,5 @@ import scapy.all as scapy
 def scan(ip):
     arp_req = scapy.ARP(pdst=ip)
     print(arp_req.summary())
-    scapy.ls(scapy.ARP())
     
 scan("<your_ip>")
