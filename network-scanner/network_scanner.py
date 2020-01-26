@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Dec 19 23:39:34 2019
+
+run this script from terminal using: python network_scanner.py -i <ip>
 """
 
 import scapy.all as scapy
