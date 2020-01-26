@@ -6,6 +6,7 @@ Created on Thu Dec 19 23:39:34 2019
 
 import scapy.all as scapy
 import optparse
+from IPy import IP
 
 
 def parse_command_line():
@@ -36,4 +37,9 @@ ip = parse_command_line()
 if ip is None:
     print("IP address is required")
 else:
-    scan(parse_command_line())
+    try:
+        IP(ip,make_net=True)
+        scan(ip)
+    except ValueError:
+        print("Not a valid IP address")
+        
