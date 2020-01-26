@@ -5,6 +5,14 @@ Created on Thu Dec 19 23:39:34 2019
 """
 
 import scapy.all as scapy
+import optparse
+
+
+def parse_command_line():
+    parser = optparse.OptionParser()
+    parser.add_option("-i", "--ip", dest="ip", help="The IP address/subnet you want to send the packet to")
+    values = parser.parse_args()
+    return values[0].ip
 
 def scan(ip):
     # the next two lines creates a packet that asks for a specific ip
@@ -24,4 +32,8 @@ def scan(ip):
         print(el[1].psrc, el[1].hwsrc)
     
     
-scan("<ip>")
+ip = parse_command_line()
+if ip is None:
+    print("IP address is required")
+else:
+    scan(parse_command_line())
