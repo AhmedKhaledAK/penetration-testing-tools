@@ -7,15 +7,15 @@ run this script from terminal using: python network_scanner.py -i <ip>
 """
 
 import scapy.all as scapy
-import optparse
+import argparse
 from IPy import IP
 
 
 def parse_command_line():
-    parser = optparse.OptionParser()
-    parser.add_option("-i", "--ip", dest="ip", help="The IP address/subnet you want to send the packet to")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--ip", dest="ip", help="The IP address/subnet you want to send the packet to")
     values = parser.parse_args()
-    return values[0].ip
+    return values.ip
 
 def scan(ip):
     # the next two lines creates a packet that asks for a specific ip
