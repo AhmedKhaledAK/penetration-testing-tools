@@ -6,7 +6,7 @@ Created on Tue Jan 28 02:14:38 2020
 
 import scapy.all as scapy
 
-def scan(ip):
+def get_mac(ip):
     # the next two lines creates a packet that asks for a specific ip
     arp_req_packet = scapy.ARP()
     arp_req_packet.pdst=ip
