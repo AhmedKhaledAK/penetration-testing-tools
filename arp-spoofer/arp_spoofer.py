@@ -43,5 +43,5 @@ try:
         print("\rPackets sent: " + str(sent_packets_num)),
         sys.stdout.flush()
         time.sleep(2)
-except:
+except KeyboardInterrupt:
     print("quitting...")
