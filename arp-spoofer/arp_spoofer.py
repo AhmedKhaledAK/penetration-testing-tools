@@ -48,4 +48,5 @@ try:
         sys.stdout.flush()
         time.sleep(2)
 except KeyboardInterrupt:
-    print("quitting...")
+    print("Cleaning up arp tables and resetting changes...")
+    restore("10.0.2.2", "10.0.2.1")
