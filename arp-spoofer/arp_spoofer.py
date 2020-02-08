@@ -20,7 +20,7 @@ def get_mac(ip):
     # combining packets
     bc_arpreq_packet = broadcast_packet/arp_req_packet
     # sending and receiving packets, the answered ones and the unanswered. The timeout is necessary.  
-    ans_list = scapy.srp(bc_arpreq_packet, timeout=1)[0]
+    ans_list = scapy.srp(bc_arpreq_packet, timeout=1, verbose=False)[0]
     
     return ans_list[0][1].hwsrc
 
