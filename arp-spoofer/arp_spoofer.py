@@ -60,3 +60,8 @@ try:
 except KeyboardInterrupt:
     print("Cleaning up arp tables and resetting changes...")
     restore(targets[1], targets[0])
+    restore(targets[0], targets[1])
+    
+    
+    
+    
