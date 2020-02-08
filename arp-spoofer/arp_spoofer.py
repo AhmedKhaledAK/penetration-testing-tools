@@ -35,5 +35,5 @@ while True:
     spoof("10.0.2.2", "10.0.2.1")
     spoof("10.0.2.1", "10.0.2.2")
     sent_packets_num+=2
-    print("Packets sent: " + str(sent_packets_num))
+    print("\rPackets sent: " + str(sent_packets_num), end="")
     time.sleep(2)
