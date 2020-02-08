@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Jan 28 02:14:38 2020
+
+ip_forward needs to be enabled : echo 1 > /proc/sys/net/ipv4
 """
 
 import scapy.all as scapy
