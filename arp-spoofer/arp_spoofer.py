@@ -33,7 +33,7 @@ def spoof(target_ip, spoof_ip):
     
 def restore(dest_ip, source_ip):
     packet = scapy.ARP(op=2, pdst=dest_ip, hwdst=get_mac(dest_ip), psrc=source_ip, hwsrc=get_mac(source_ip))
-    scapy.send(packet, count=4, verbose=False)
+    scapy.send(packet, count=4, verbose=False) # count=4 to make sure we cleaned things up
 
     
 sent_packets_num = 0
