@@ -3,6 +3,8 @@
 """
 Created on Thu Dec 19 23:39:34 2019
 
+Description: scan connected devices on the same network.
+
 run this script from terminal using: python network_scanner.py -i <ip>
 """
 
