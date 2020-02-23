@@ -3,6 +3,8 @@
 """
 Created on Thu Nov 21 18:44:25 2019
 
+Description: changes MAC address.
+
 run this from terminal using: python3 mac_changer.py -i <interface_name> -m <new_mac>
 """
 
@@ -19,7 +21,7 @@ def get_current_address(interface):
         print("This is the current MAC address: " + search_result.group(0))
         return search_result.group(0)
     else:
-        print("Could not find a MAC address for this interface")
+        #print("Could not find a MAC address for this interface")
         # returns NoneType
 
 def change_mac(interface, new_mac):
