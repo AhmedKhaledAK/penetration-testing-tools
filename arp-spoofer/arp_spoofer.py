@@ -3,6 +3,8 @@
 """
 Created on Tue Jan 28 02:14:38 2020
 
+Description: spoof the targets and manipulate their ARP tables.
+
 ** ip_forward needs to be enabled : echo 1 > /proc/sys/net/ipv4/ip_forward
 run this script from the terminal using: python arp_spoofer.py -t <target1> -t <target2>
 ** you may need to disable the ip_forward after that. 
