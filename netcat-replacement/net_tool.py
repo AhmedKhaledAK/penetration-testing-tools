@@ -76,6 +76,13 @@ def set_variables(options):
 
     return True
 
+
+def client():
+    pass
+
+def server():
+    pass
+
 def main():
     global listen
     global shell_cmd
@@ -96,5 +103,11 @@ def main():
     if boolean == False:
         print("Undefined usage")
         sys.exit(0)
+
+    if not listen and len(target) != 0 and port > 0:
+        client()
+
+    if listen:
+        server()
 
 main()
