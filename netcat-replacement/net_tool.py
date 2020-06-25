@@ -38,9 +38,6 @@ def parse_args():
     except getopt.GetoptError as err:
         print(str(err))
         opts_args = None
-    
-    #print("opts:",opts_args[0])
-    #print("args:",opts_args[1])
 
     if opts_args == None:
         return None
@@ -82,37 +79,26 @@ def client():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     try:
-        print("target:", target)
-        print("port:", port)
         client_socket.connect((target, port))
-        print("Ex1")
         if len(buffer):
-            print("here")
             client_socket.send(buffer)
 
         while True:
             recv_len = 1
             response = ""
             while recv_len:
-                print("here")
                 data = client_socket.recv(4096)
                 recv_len = len(data)
                 response += data.decode()
-                print("resp:", response)
                 if recv_len < 4096:
                     break
             
-            print("response:")
             print(response)
 
             buffer = input("")
             buffer += "\n"
-            
-            print("buff:",buffer)
 
             client_socket.send(bytes(buffer.encode()))
-
-        print("Ex2")
 
     except:
         print("EXCEPTION, closing connection")
@@ -171,12 +157,9 @@ def client_handler(client_socket):
         print("handling shell command")
         while True:
             client_socket.send(bytes("SHELL<>: ".encode()))
-            print("sending SHELL")
             cmd_buffer = ""
             while "\n" not in cmd_buffer:
-                print("cmd_buff:", cmd_buffer)
                 cmd_buffer += str(client_socket.recv(1024).decode("utf-8"))
-                #print(cmd_buffer)
 
             response = run_command(cmd_buffer)
             client_socket.send(response)
