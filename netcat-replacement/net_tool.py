@@ -78,7 +78,46 @@ def set_variables(options):
 
 
 def client():
-    pass
+
+    global listen
+    global shell_cmd
+    global upload 
+    global execute_cmd
+    global target
+    global upload_dest
+    global port
+
+    buffer = sys.stdin.read()
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    try:
+        client_socket.connect((target, port))
+
+        if len(buffer) > 0:
+            client_socket.send(buffer)
+
+        while True:
+            recv_len = 1
+            response = ""
+            while recv_len != 0:
+                data = client_socket.recv(4096)
+                recv_len = len(data)
+                response += data
+                if recv_len < 4096:
+                    break
+            
+            print("response:")
+            print(response)
+
+            buffer = input()
+            buffer += "\n"
+
+            client_socket.send(buffer)
+
+    except:
+        print("EXCEPTION, closing connection")
+        client_socket.close()
+
 
 def server():
     pass
