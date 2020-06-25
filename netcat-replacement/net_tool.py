@@ -89,6 +89,7 @@ def main():
 
     if options == None:
         print("Undefined usage")
+        sys.exit(0)
 
     boolean = set_variables(options)
 
