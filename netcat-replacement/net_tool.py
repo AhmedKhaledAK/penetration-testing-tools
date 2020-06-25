@@ -46,6 +46,35 @@ def parse_args():
         return None
     return opts_args[0]
 
+def set_variables(options):
+
+    global listen
+    global shell_cmd
+    global upload 
+    global execute_cmd
+    global target
+    global upload_dest
+    global port
+
+    for opt, arg in options:
+        if opt in ("-h", "--help"):
+            usage()
+        elif opt in ("-l", "--listen"):
+            listen = True
+        elif opt in ("-e", "--execute"):
+            execute_cmd = arg
+        elif opt in ("-c", "--command"):
+            shell_cmd = True
+        elif opt in ("-u", "--upload"):
+            upload_dest = arg
+        elif opt in ("-t", "--target"):
+            target = arg
+        elif opt in ("-p", "--port"):
+            port = int(arg)
+        else:
+            return False
+
+    return True
 
 def main():
     global listen
@@ -56,8 +85,15 @@ def main():
     global upload_dest
     global port
 
-    parsed_line = parse_args()
-    #set_variables()
-    print(parsed_line)
+    options = parse_args()
+
+    if options == None:
+        print("Undefined usage")
+
+    boolean = set_variables(options)
+
+    if boolean == False:
+        print("Undefined usage")
+        sys.exit(0)
 
 main()
