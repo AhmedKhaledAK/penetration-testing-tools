@@ -29,20 +29,22 @@ def usage():
 
 def parse_args():
     if len(sys.argv[1:]) == 0:
-        return None, None
+        return None
 
-    opts, args = None, None
+    opts_args = None
     
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hle:t:p:cu:", ["help","listen","execute","target","port","command","upload"])
+        opts_args = getopt.getopt(sys.argv[1:], "hle:t:p:cu:", ["help","listen","execute","target","port","command","upload"])
     except getopt.GetoptError as err:
         print(str(err))
-        opts, args = None, None
+        opts_args = None
     
-    #print("opts:",opts)
-    #print("args:",args)
+    #print("opts:",opts_args[0])
+    #print("args:",opts_args[1])
 
-    return opts, args
+    if opts_args == None:
+        return None
+    return opts_args[0]
 
 
 def main():
@@ -54,6 +56,8 @@ def main():
     global upload_dest
     global port
 
-    parse_args()
+    parsed_line = parse_args()
+    #set_variables()
+    print(parsed_line)
 
 main()
