@@ -76,11 +76,7 @@ def set_variables(options):
 
     return True
 
-
 def client():
-
-    global target
-    global port
 
     buffer = sys.stdin.read()
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -115,7 +111,71 @@ def client():
 
 
 def server():
-    pass
+    global target
+
+    if not len(target):
+        target = "0.0.0.0"
+
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.bind((target, port))
+    server_socket.listen(5)
+
+    while True:
+        client_socket, addr = server_socket.accept()
+
+        client_thread = threading.Thread(target=client_handler, args=(client_socket,))
+        client_thread.start()
+
+def client_handler(client_socket):
+    global upload
+    global execute_cmd
+    global shell_cmd
+
+    if len(upload_dest):
+        file_buffer = ""
+        while True:
+            data = client_socket.recv(1024)
+            if not data:
+                break
+            else:
+                file_buffer += data
+
+        try:
+            file_desc = open(upload_dest, "wb")
+            file_desc.write(file_buffer)
+            file_desc.close()
+
+            client_socket.send("Saved file to:", upload_dest)
+        except:
+            client_socket.send("Failed to save file to:", upload_dest)
+
+
+    if len(execute_cmd):
+        op = run_command(execute_cmd)
+        client_socket.send(op)
+
+    if len(shell_cmd):
+        while True:
+            client_socket.send("SHELL<>: ")
+
+            cmd_buffer = ""
+            while "\n" not in cmd_buffer:
+                cmd_buffer += client_socket.recv(1024)
+
+            response = run_command(cmd_buffer)
+            client_socket.send(response)
+
+
+def run_command(cmd):
+    #trimming the newline
+    cmd = cmd.rstrip()
+
+    try:
+        op = subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True)
+    except:
+        op = "Failed to execute command\r\n"
+
+    return op
 
 def main():
     global listen
