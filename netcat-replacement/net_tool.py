@@ -79,12 +79,7 @@ def set_variables(options):
 
 def client():
 
-    global listen
-    global shell_cmd
-    global upload 
-    global execute_cmd
     global target
-    global upload_dest
     global port
 
     buffer = sys.stdin.read()
