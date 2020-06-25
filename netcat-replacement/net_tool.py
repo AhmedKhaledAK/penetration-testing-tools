@@ -82,28 +82,37 @@ def client():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     try:
+        print("target:", target)
+        print("port:", port)
         client_socket.connect((target, port))
-
-        if len(buffer) > 0:
+        print("Ex1")
+        if len(buffer):
+            print("here")
             client_socket.send(buffer)
 
         while True:
             recv_len = 1
             response = ""
-            while recv_len != 0:
+            while recv_len:
+                print("here")
                 data = client_socket.recv(4096)
                 recv_len = len(data)
-                response += data
+                response += data.decode()
+                print("resp:", response)
                 if recv_len < 4096:
                     break
             
             print("response:")
             print(response)
 
-            buffer = input()
+            buffer = input("")
             buffer += "\n"
+            
+            print("buff:",buffer)
 
-            client_socket.send(buffer)
+            client_socket.send(bytes(buffer.encode()))
+
+        print("Ex2")
 
     except:
         print("EXCEPTION, closing connection")
@@ -114,7 +123,9 @@ def server():
     global target
 
     if not len(target):
-        target = "0.0.0.0"
+        target = "127.0.0.1"
+
+    print(target)
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((target, port))
@@ -122,6 +133,8 @@ def server():
 
     while True:
         client_socket, addr = server_socket.accept()
+
+        print("received:", client_socket)
 
         client_thread = threading.Thread(target=client_handler, args=(client_socket,))
         client_thread.start()
@@ -154,13 +167,16 @@ def client_handler(client_socket):
         op = run_command(execute_cmd)
         client_socket.send(op)
 
-    if len(shell_cmd):
+    if shell_cmd:
+        print("handling shell command")
         while True:
-            client_socket.send("SHELL<>: ")
-
+            client_socket.send(bytes("SHELL<>: ".encode()))
+            print("sending SHELL")
             cmd_buffer = ""
             while "\n" not in cmd_buffer:
-                cmd_buffer += client_socket.recv(1024)
+                print("cmd_buff:", cmd_buffer)
+                cmd_buffer += str(client_socket.recv(1024).decode("utf-8"))
+                #print(cmd_buffer)
 
             response = run_command(cmd_buffer)
             client_socket.send(response)
@@ -169,7 +185,7 @@ def client_handler(client_socket):
 def run_command(cmd):
     #trimming the newline
     cmd = cmd.rstrip()
-
+    print("cmd:", cmd)
     try:
         op = subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True)
     except:
