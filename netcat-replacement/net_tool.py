@@ -18,13 +18,13 @@ def usage():
     print("Usage: net_tool.py -t target -p port")
     print("-l --listen              - listen on [host]:[port] for incoming connections")
     print("-e --execute=file_to_run - execute the given file upon receiving a connection")
-    print("-c --command             - initialize a command shell")
+    print("-c --command             - run shell commands")
     print("-u --upload=destination  - upon receiving connection upload a file and write to [destination]")
-    print("Examples: ")
-    print("net_tool.py -t 192.168.0.1 -p 5555 -l -c")
-    print("net_tool.py -t 192.168.0.1 -p 5555 -l -u=c:\\target.exe")
-    print("net_tool.py -t 192.168.0.1 -p 5555 -l -e=\"cat /etc/passwd\"")
-    print("echo 'ABCDEFGHI' | ./net_tool.py -t 192.168.11.12 -p 135")
+    print("\n\nExamples: \n")
+    print("net_tool.py -t 192.168.0.1 -p 3333 -l -c")
+    print("net_tool.py -t 192.168.0.1 -p 3333 -l -u=c:\\target.exe")
+    print("net_tool.py -t 192.168.0.1 -p 3333 -l -e=\"cat /etc/passwd\"")
+    print("echo 'HI' | ./net_tool.py -t 192.168.11.12 -p 3333")
     sys.exit(0)
 
 def parse_args():
@@ -150,7 +150,7 @@ def client_handler(client_socket):
 
 
     if len(execute_cmd):
-        op = run_command(execute_cmd)
+        op = run_cmd(execute_cmd)
         client_socket.send(op)
 
     if shell_cmd:
@@ -161,18 +161,18 @@ def client_handler(client_socket):
             while "\n" not in cmd_buffer:
                 cmd_buffer += str(client_socket.recv(1024).decode("utf-8"))
 
-            response = run_command(cmd_buffer)
+            response = run_cmd(cmd_buffer)
             client_socket.send(response)
 
 
-def run_command(cmd):
+def run_cmd(cmd):
     #trimming the newline
     cmd = cmd.rstrip()
     print("cmd:", cmd)
     try:
         op = subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True)
     except:
-        op = "Failed to execute command\r\n"
+        op = "Failed to execute cmd\r\n"
 
     return op
 
