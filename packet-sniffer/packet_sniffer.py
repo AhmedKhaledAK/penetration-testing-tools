@@ -5,9 +5,9 @@ import scapy.all as scapy
 import time
 import sys
 import argparse
-import threading
 import os
 import signal
+import thread
 
 def parse_command_line():
     parser = argparse.ArgumentParser()
@@ -38,7 +38,7 @@ def restore(dest_ip, source_ip):
     packet = scapy.ARP(op=2, pdst=dest_ip, hwdst=get_mac(dest_ip), psrc=source_ip, hwsrc=get_mac(source_ip))
     scapy.send(packet, count=4, verbose=False) # count=4 to make sure we cleaned things up
     
-    os.kill(os.getpid(), signal.SIGINT)
+    #os.kill(os.getpid(), signal.SIGINT)
 
 def spoof_target(target1, target2):
     sent_packets_num = 0
@@ -61,11 +61,10 @@ def main():
     targets = parse_command_line()
     
     
-    spoof_thread = threading.Thread(target = spoof_target, args=(targets[0], targets[1]))
-    spoof_thread.start()
+    thread.start_new_thread(spoof_target, (targets[0], targets[1]))
     
     try:
-        pass
+        while True: time.sleep(100)
     except KeyboardInterrupt:
         print("Cleaning up arp tables and resetting changes...")
         restore(targets[1], targets[0])
