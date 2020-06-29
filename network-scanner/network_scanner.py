@@ -10,7 +10,7 @@ run this script from terminal using: python network_scanner.py -i <ip>
 
 import scapy.all as scapy
 import argparse
-from IPy import IP
+#from IPy import IP
 
 
 def parse_command_line():
@@ -39,7 +39,7 @@ if ip is None:
     print("IP address is required")
 else:
     try:
-        IP(ip,make_net=True)
+        #IP(ip,make_net=True)
         scan(ip)
     except ValueError:
         print("Not a valid IP address")
