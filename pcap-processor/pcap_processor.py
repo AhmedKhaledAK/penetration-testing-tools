@@ -35,7 +35,7 @@ def extract_image(headers, payload):
         return None, None
     
     return image, image_type
-            
+                
 
 def write_to_file(image, image_type, images_cnt):
     filename = "%s-pcap_image-%d.%s"%(pcap_file, images_cnt, image_type)
@@ -74,9 +74,14 @@ def find_http(pcap_file):
         
         image, image_type = extract_image(headers, payload)
         
+        #fd = open("/home/ahmedkhaled/Desktop/unrelated/IMG-20180809-WA0009.jpg", "rb")
+
+        #image = fd.read()
+        
+            
         print("image:")
         print(image)
-        print("\niamge type:")
+        print("\nimage type:")
         print(image_type)
         
         if image is not None and image_type is not None:
