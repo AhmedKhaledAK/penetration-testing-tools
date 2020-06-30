@@ -7,7 +7,7 @@ import re
 import zlib
 import scapy.all as scapy
 
-images_dir = "/home/Documets/Kali-Linux/penetration-testing-tools/pcap-processor/images"
+images_dir = "/home/ahmedkhaled/Documents/Kali-Linux/penetration-testing-tools/pcap-processor/images"
 pcap_file = "dummy_data.pcapng"
 
 def get_headers(payload):
@@ -37,8 +37,11 @@ def extract_image(headers, payload):
     return image, image_type
             
 
-def write_to_file(image, image_type):
-    
+def write_to_file(image, image_type, images_cnt):
+    filename = "%s-pcap_image-%d.%s"%(pcap_file, images_cnt, image_type)
+    fd = open("%s/%s"%(images_dir,filename), "wb")
+    fd.write(image)
+    fd.close()
 
 def find_http(pcap_file):
     images = 0
@@ -77,13 +80,17 @@ def find_http(pcap_file):
         print(image_type)
         
         if image is not None and image_type is not None:
-            wrte_to_file(image, image_type)
+            write_to_file(image, image_type, images)
+            
+        images += 1
         
     # for testing purposes         
     print("var:",var)
+    return images
 
 
 def main():
-    find_http(pcap_file)
+    cnt = find_http(pcap_file)
+    print(cnt)
 
 main()
