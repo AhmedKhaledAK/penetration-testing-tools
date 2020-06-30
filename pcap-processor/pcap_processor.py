@@ -37,6 +37,9 @@ def extract_image(headers, payload):
     return image, image_type
             
 
+def write_to_file(image, image_type):
+    
+
 def find_http(pcap_file):
     images = 0
     packets = scapy.rdpcap(pcap_file)
@@ -72,6 +75,9 @@ def find_http(pcap_file):
         print(image)
         print("\niamge type:")
         print(image_type)
+        
+        if image is not None and image_type is not None:
+            wrte_to_file(image, image_type)
         
     # for testing purposes         
     print("var:",var)
