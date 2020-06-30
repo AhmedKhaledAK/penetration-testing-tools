@@ -23,6 +23,20 @@ def get_headers(payload):
     
     return headers
 
+def extract_image(headers, payload):
+    image = None
+    image_type = None
+    
+    try:
+        if "image" in headers['Content-Type']:
+            image_type = headers['Content-Type'].split("/")[1]
+            image = payload[payload.index("\r\n\r\n") + 4:]
+    except:
+        return None, None
+    
+    return image, image_type
+            
+
 def find_http(pcap_file):
     images = 0
     packets = scapy.rdpcap(pcap_file)
@@ -48,6 +62,16 @@ def find_http(pcap_file):
         headers = get_headers(payload)
         print("headers:")
         print(headers)
+        
+        if headers is None:
+            continue
+        
+        image, image_type = extract_image(headers, payload)
+        
+        print("image:")
+        print(image)
+        print("\niamge type:")
+        print(image_type)
         
     # for testing purposes         
     print("var:",var)
