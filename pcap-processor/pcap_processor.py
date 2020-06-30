@@ -4,9 +4,10 @@
 
 """
 import re
-import zlib
+#import zlib
 import scapy.all as scapy
 
+# change this according to your path
 images_dir = "/home/ahmedkhaled/Documents/Kali-Linux/penetration-testing-tools/pcap-processor/images"
 pcap_file = "dummy_data.pcapng"
 
