@@ -51,7 +51,7 @@ def main():
     
     for i in range(threads):
         print("thread #:", i)
-        t = threading.Thread(target=test_path, args=(paths, target))
-        t.start()     
+        thread = threading.Thread(target=test_path, args=(paths, target))
+        thread.start()     
     
 main()
