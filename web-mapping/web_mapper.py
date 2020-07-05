@@ -5,7 +5,7 @@
 """
 import urllib as crawler
 import queue
-import _thread
+import thread
 import os
 
 threads = 10
@@ -20,6 +20,25 @@ def get_paths():
             paths.put(path)    
     return paths
 
+
+def test_path(paths, target):
+    while not paths.empty():
+        path = paths.get()
+        url = "%s%s" % (target, path)
+        req = crawler.request.Request(url)
+        try:
+            response = crawler.request.urlopen(req)
+            content = response.read()
+            
+            print("response content:")
+            print(content)
+            print("response code:", response.code)
+            print("response path:", path)
+            response.close()
+        except crawler.request.HTTPError as err:
+            print("failed crawling; error code:", err.code)
+            pass
+
 def main():
     target = "https:/www.example.com" # your target website here
     directory = "/home/ahmedkhaled/Downloads/Wordpress/latest/wordpress"
@@ -27,5 +46,9 @@ def main():
     os.chdir(directory)
     
     paths = get_paths()
+    
+    for i in range(threads):
+        print("thread #:", i)
+        thread.start_new_thread(test_path, (paths, target))     
     
 main()
