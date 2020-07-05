@@ -10,7 +10,7 @@ import threading
 import os
 
 threads = 10
-cnt = 0
+
 def get_paths():
     paths = queue.Queue()
     for root, dirs, files in os.walk("."):
@@ -27,13 +27,9 @@ def test_path(paths, target):
     while not paths.empty():
         path = paths.get()
         url = "%s%s" % (target, path)
-        print("here1")
         req = crawler.Request(url)
-        print("req:", req.get_full_url())
         try:
-            print("here")
             response = crawler.urlopen(req)
-            print("here2")
             content = response.read()
             
             print("response content:")
@@ -42,8 +38,7 @@ def test_path(paths, target):
             print("response path:", path)
             response.close()
         except cerr.HTTPError as err:
-            cnt += 1
-            print("failed crawling; error code:")
+            print("failed crawling; error code:", err)
             pass
 
 def main():
@@ -59,5 +54,4 @@ def main():
         t = threading.Thread(target=test_path, args=(paths, target))
         t.start()     
     
-    print(cnt)
 main()
